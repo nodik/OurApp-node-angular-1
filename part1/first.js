@@ -32,19 +32,23 @@ function main()
         return parseFloat(e);
     });
 
-    sum = a.reduce(function(prev,curr){
-        return prev+curr;
-    },0);
-    print(sum);
+    a.unshift(0);
+
+    for(var i=0; i<a.length; i++){
+        if(i) a[i]+=a[i-1];
+    }
+
+    sum = [a.length-1];
+
     function getRandomElement(){
         var e = Math.random()*sum;
         var lo = 0, hi = a.length- 1, mid;
         while(hi-lo>1){
             mid=Math.floor((lo+hi)/2);
-            if(a[mid]>e) hi=mid;
+            if(a[mid]>=e) hi=mid;
             else lo=mid;
         }
-        return lo;
+        return hi;
     }
 
     print(getRandomElement());
