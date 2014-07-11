@@ -1,68 +1,103 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.7/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.7/angular-resource.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.7/angular-route.min.js"></script>
-
-		<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
-	<script type="text/javascript" src="js/main.js"></script>
-	<script type="text/javascript" src="js/controller/main.js"></script>
-
-
-</head>
 <body ng-app="App" ng-controller="MainCtrl">
-	<nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">menu</a>
+<div class="container" role="main">
+  	<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Menu</a>
+
+      </div>
+      
+      <div class="collapse navbar-collapse" >    
+        <ul class="nav navbar-nav navbar-left">          
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" >Вкладки<span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" >
+              
+              <li ><a href="#" ng-repeat="item in Items" ng-click="checkItem(item.name)">{{item.name}}</a></li>
+            
+            </ul>
+          </li>
+        </ul>
+
+        <form class="navbar-form navbar-left" role="search">     
+                <div class="input-group input-group-sm">             
+                 
+                  <span class="input-group-btn">
+                    <button class="btn btn-default btn-sm" ng-click="open('sm')"><i class="glyphicon glyphicon-plus"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+          
+        </form>
+        <section ng-show="isItem">
+        <span class="navbar-brand" href="#">{{Item.name}}</span>      
+        <a class="navbar-brand" ng-click="searchItem()"><i class="glyphicon glyphicon-play"></i></a>
+        <a class="navbar-brand" ng-click="deleteItem()"><i class="glyphicon glyphicon-remove"></i></a>
+      </section>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+
+    <div class="row">
+        <div class="col-lg">
+     
+    <table ng-table="tableParams" template-pagination="custom/pager" class="table">
+        <tr ng-repeat="result in $data track by $index">
+            <td data-title="'Results'">
+                {{result}}
+            </td>           
+        </tr>
+    </table>
+    
+        </div>
+   
+      </div>
+
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        
-        <li ng-repeat="tab in tabs"><a  href="#">{{tab.name}}</a></li>                
 
-      </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.7/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.7/angular-resource.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.7/angular-route.min.js"></script>
 
-<footer>
-<p>Test</p>
-</footer>
+    <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+  <script data-require="ng-table@*" data-semver="0.3.0" src="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.js"></script>
+
+    
+    <link data-require="ng-table@*" data-semver="0.3.0" rel="stylesheet" href="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.css" />
+
+  <script type="text/javascript" src="js/lib/ui-bootstrap-0.11.0.min.js"></script>
+
+  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="js/service/regex.js"></script>
+  <script type="text/javascript" src="js/controller/main.js"></script>
+
+  <script type="text/ng-template" id="custom/pager">
+        <ul class="pager ng-cloak">
+          <li ng-repeat="page in pages"
+                ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
+                ng-show="page.type == 'prev' || page.type == 'next'" ng-switch="page.type">
+            <a ng-switch-when="prev" ng-click="params.page(page.number)" href="">&laquo; Previous</a>
+            <a ng-switch-when="next" ng-click="params.page(page.number)" href="">Next &raquo;</a>
+          </li>
+            <li> 
+            <div class="btn-group">
+                <button type="button" ng-class="{'active':params.count() == 10}" ng-click="params.count(10)" class="btn btn-default">10</button>
+                <button type="button" ng-class="{'active':params.count() == 25}" ng-click="params.count(25)" class="btn btn-default">25</button>
+                <button type="button" ng-class="{'active':params.count() == 50}" ng-click="params.count(50)" class="btn btn-default">50</button>
+                <button type="button" ng-class="{'active':params.count() == 100}" ng-click="params.count(100)" class="btn btn-default">100</button>
+            </div>
+            </li>
+        </ul>
+    </script>
 </body>
 </html>

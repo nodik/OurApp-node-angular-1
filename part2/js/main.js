@@ -1,7 +1,9 @@
 'use strict'
 angular.module('App',[
   'ngRoute',
-  'ngResource'
+  'ngResource',
+  'ngTable',
+  'ui.bootstrap'
   ])
    .config(function ($routeProvider) {
 	$routeProvider
